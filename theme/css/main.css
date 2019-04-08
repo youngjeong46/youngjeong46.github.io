@@ -83,6 +83,8 @@ div.page-container footer div.post-footer div.post-category-info { margin-top: 2
 div.page-container footer div.post-footer div.post-category-info img { max-width: 60px; border-radius: 3px; margin-right: 10px; }
 div.page-container div.tags { padding: 20px; }
 @media screen and (min-width: 48em) { div.page-container div.tags { padding: 0; } }
+div.page-container div.links { padding: 20px; }
+@media screen and (min-width: 48em) { div.page-container div.links { padding: 0; } }
 
 div.article-header-container div.background-image-container div.background-image { background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; width: 100%; height: auto; position: relative; float: left; overflow-x: hidden; margin: 20px 0 40px 0; }
 div.article-header-container div.background-image-container div.background-image div.title { color: white; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95%; }
@@ -173,6 +175,10 @@ div.author-page-container div.post img.post-image { width: 95%; }
 div.tags a { color: rgba(0, 0, 0, 0.6); background: rgba(255, 255, 255, 0.97); font-size: 13px; border-radius: 3px; border: 1px solid #f0f0f0; padding: 5px 10px; line-height: 22px; text-decoration: none; margin: 0 8px 8px 0; display: inline-block; }
 
 div.tags a:hover { color: #468c54; border-color: #a9d8b2; background: rgba(87, 173, 104, 0.1); text-decoration: none; }
+
+div.links a { color: rgba(0, 0, 0, 0.6); background: rgba(255, 255, 255, 0.97); font-size: 13px; border-radius: 3px; border: 1px solid #f0f0f0; padding: 5px 10px; line-height: 22px; text-decoration: none; margin: 0 8px 8px 0; display: inline-block; }
+
+div.links a:hover { color: #468c54; border-color: #a9d8b2; background: rgba(87, 173, 104, 0.1); text-decoration: none; }
 
 pre { font-family: Consolas, 'Deja Vu Sans Mono', 'Ubuntu Mono', 'Bitstream Vera Sans Mono', Monaco, 'Courier New'; font-size: 16px; line-height: 1.4; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; padding: 9.5px; }
 

@@ -20,7 +20,8 @@
                         <li class="main-nav-item"><a href="/" class="pure-menu-link">Data to Stories</a></li>
 
                         <li class="main-nav-item"><a href="/pages/about-me/" class="pure-menu-link">About Me</a></li>
-                        <li class="main-nav-item active"><a href="/category/blog" class="pure-menu-link">Blog</a></li>
+                        <li class="main-nav-item"><a href="/category/miscellaneous" class="pure-menu-link">Miscellaneous</a></li>
+                        <li class="main-nav-item active"><a href="/category/projects" class="pure-menu-link">Projects</a></li>
                     </ul>
                 </div>
              </div>
@@ -34,11 +35,14 @@
 <div class="page-container">
     <div class="entry-content">
         <div class="post-meta pure-g">
+            <div class="pure-u">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA " class="post-avatar" alt="Projects">
+            </div>
             <div class="pure-u-3-4 meta-data">
-                <a href="/category/blog" class="category">Blog</a><br />
+                <a href="/category/projects" class="category">Projects</a><br />
 
                 <a class="author" href="/author/young-jeong.html">Young Jeong</a>
-                &mdash; <abbr title="2019-04-08T17:30:00-07:00">Mon 08 April 2019</abbr>
+                &mdash; <abbr title="2019-04-08T17:30:00-07:00">Mon 08 April 2019</abbr> &middot; 5 min read
             </div>
         </div>
     </div>
@@ -61,18 +65,73 @@
     </div>
 
     <div class="entry-content">
-        <p>New York City is an ultimate American city: A melting pot of all cultures that presents itself to exciting opportunities; all that you can possibly see and experience in the rest of the United States, you will likely to do so in New York. One of the most iconic institutions in NYC is its 115-year-old subway system. I can almost guarantee that everyone born in New York City has at one point in their life taken the subway to go somewhere and do something. The story for today takes us to the very New York Subway Stations.</p>
-<h3><strong>The Story: WomenTechWomenYes</strong></h3>
+        <p>New York City is an ultimate American city: A melting pot of all cultures that presents itself to exciting opportunities; all that you can possibly see and experience in the rest of the United States, you will likely to do so in New York. One of the most iconic institutions in NYC is its 115-year-old subway system. I can almost guarantee that everyone born in New York City has at one point in their life taken the subway to go somewhere and do something. The project for today takes us to the very New York Subway Stations.</p>
+<h3><strong>The Project: WomenTechWomenYes</strong></h3>
 <p>WomenTechWomenYes is a fictional company that promotes passion and participation of women in technology. WTWY is hosting a gala and needs attendees. One of its fundraising efforts is to employ its street teams at NYC subway stations for email sign ups; signees receive free tickets to the gala where they are encouraged to donate to raising the awareness of women in technology.</p>
-<p>The company has tasked us, a team of 2, to help optimize the placement of the street team, to be able to gather the most signatures, ideally from those who will attend the gala and contribute.</p>
-<p>I, along with my partner, used the public MTA subway data and applied Exploratory Data Analysis (EDA) to come up with our suggestions. EDA was done using Python and include the basic data science libraries (pandas, seaborn).</p>
-<h3><strong>My (Our) suggestions</strong></h3>
-<p>We wanted to make the scope on two keywords: "Women" and "Tech". While the bulk of the data mining was done to identify the </p>
-<h3><strong>What could make this a better solution?</strong></h3>
+<p>The company has tasked me to help optimize the placement of the street team, to be able to gather the most signatures, ideally from those who will attend the gala and contribute.</p>
+<p>I used the public MTA subway data and applied Exploratory Data Analysis (EDA) to come up with my suggestions. EDA was done in python under Jupyter Notebook and include the basic data science libraries (pandas, seaborn). The public data collected data on cumulative entries and exits at every turnstile device in a station every 4 hours. You can see an example data <a href="http://web.mta.info/developers/data/nyct/turnstile/turnstile_190330.txt">here</a> for the week ending on March 30th, 2019.</p>
+<h3><strong>Exploratory Data Analysis: What I learned looking at the MTA data</strong></h3>
+<p>The MTA data is nicely formatted in CSV format for us to import into python (jupyter notebook to be specific), so data cleaning was minimal; the biggest thing was removing whitespaces on column headers. However, the data itself had lots of inaccurate data: For example, some 4 hours windows were skipped, some cumulative entries and exit counts reset to random numbers and etc.</p>
+<p>Also, running the code on 3 months of data takes quite a bit of time when I are filtering data out and doing other data manipulations. One cool python concept I learned is called pickle. I can always save part of the code  to the point, pickle it, and call it back to avoid running the code again and again (if it's time-consuming) and wasting time.</p>
+<p>Example code:</p>
+<div class="highlight"><pre><span></span>    <span class="c1"># Save a fully loaded dataframe into a pickle file:</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;fulldata.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">to_write</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data_good</span><span class="p">,</span> <span class="n">to_write</span><span class="p">)</span>
+
+    <span class="c1">#Then we can call it back in to save time</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;fulldata.pickle&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_file</span><span class="p">:</span>
+        <span class="n">full_df</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">read_file</span><span class="p">)</span>
+    <span class="n">full_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+
+<h3><strong>My Suggestions</strong></h3>
+<p>I wanted to make the scope on two keywords: "Women" and "Tech". While the bulk of the data mining was done to identify the stations with the highest traffic, I wanted to especially concentrate on areas of high tech population (company locations of places such as IBM, Google, etc.) and women (grocery shopping areas, coffee shops, and other places young women might frequent).</p>
+<p>Having said all that, as I will mention later, the project timeframe was 5 days and I simply ran out of time. The suggestions for placement of the street team therefore was given as the following: <strong>Place your street team at the location of the Top 10 Stations by exit traffic, but focus your attention on the Weekdays (from Mondays-Fridays) and minimize on the weekends.</strong> This was based on two main findings:</p>
+<ol>
+<li>
+<p>Top 10 All of the Top 10 Stations are concentrated in Manhattan, which meant most of the riders exiting are at their destination (whether they are arriving at the NYC landmarks or arriving to work). I made a choice to select exit traffic over entry traffic; the thought is that it is easier to make a connection with the rider who has already arrived at their destination because they are not in a rush. Of course this is subject to reasoning, and this is what I chose for my "story".</p>
+<p><img alt="Top10 Stations" src="https://s3-us-west-2.amazonaws.com/datatostories/top10stations"></p>
+</li>
+<li>
+<p>Traffic flow shows clear evidence of higher volume during the work week (Tuesday - Friday) based on data:</p>
+<p><img alt="Week Heatmap" src="https://s3-us-west-2.amazonaws.com/datatostories/weekheatmap"></p>
+</li>
+</ol>
+<h3><strong>How can I improve on this suggestion?</strong></h3>
+<p>This was my first foray into exploratory data analysis and unfortunately I couldn't quite get to what my story wanted to be. Here are some of the things I would have implemented it in the next iteration of my design:</p>
+<ol>
+<li>
+<p>Examine the time breakdown further, into hours of the day, specifically looking at three different time periods: Morning (up to Noon), Afternoon (12-4pm), and evenings (After 4pm). I may see a pattern that helps us identify in which stations to focus more of the street team on at different time periods. Placing a street team at the Top 10 Stations as identified in my proposal for all hours is not the best use of their time, and this breakdown will help the team take breaks in between.</p>
+</li>
+<li>
+<p>Identify the stations that are closest to the Tech companies and placing an emphasis on those will increase the chances of WTWY gathering more useful signatures (more people that will actually attend and donate to the cause), as opposed to gathering signatures without return in attendance. Silicon Alley is an area in NYC that is akin to Silicon Valley (hence the name) in the Bay Area and that could be a great starting point. Looking at individual companies and their locations and other data about them (such as employee number) can give me a better sense of how to allocate the street team.</p>
+</li>
+<li>
+<p>Identify the stations that would have a lot of women passing by: stations near shopping malls, coffee shops, newest bars, eateries and etc. In conjunction with #1, this can help me locate stations near where women go for Happy Hour (evenings), for lunch (afternoons) or coffee breaks (mornings). </p>
+</li>
+</ol>
+<h3><strong>What I learned from this Project</strong></h3>
+<p>This being my first true Data Science project, I learned a lot of lessons which I will need to apply to my future projects:</p>
+<ol>
+<li>
+<p>Real world data science deadlines will always limit you from achieving a perfect solution - I simply ran out of time to make my solution better, and had to settle far from what I wanted to do. But...</p>
+</li>
+<li>
+<p>My solution was an MVP (Minimum Viable Product) - It was a working product viable to be presented to the client, regardless of how garbage it was.</p>
+</li>
+<li>
+<p>Sometimes the obvious way to do something ISN'T the right way to do it in Data Science - I tried looking at top stations by traffic and while it gaves us some of the most popular stations, WTWY may not secure more signatures because these are tourists destinations; they will not attend a gala and donate for a cause in a city they don't live in.</p>
+</li>
+</ol>
+<p>The last point goes back to telling the story with data - putting your design for the proposal to the client might require exploring data in less than obvious ways but doing so can give a very interesting and more appropriate insight that will help reach my goal - in this case, helping WTWY secure more attendance to and donations at its gala.</p>
     </div>
 
     <footer>
         <div class="tags">
+            <a href="/tag/mta">MTA</a>
             <a href="/tag/eda">EDA</a>
             <a href="/tag/seaborn">Seaborn</a>
             <a href="/tag/pandas">Pandas</a>
@@ -87,7 +146,7 @@
                         <h3 class="author-name"><a href="/author/young-jeong.html">Young Jeong</a></h3>
                         <p class="author-description">
                           
-            I am aspiring Data Scientist, attending Metis.
+            I am an aspiring Data Scientist, currently attending Metis.
         
                         </p>
                     </div>
@@ -95,6 +154,21 @@
             </div>
 
 
+            <div class="pure-u-1 pure-u-md-1-2">
+
+                <div class="pure-g post-category-info">
+                    <div class="pure-u">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA" alt="">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="/category/projects">Projects</a></h3>
+                        <p class="author-description">
+                          
+                        </p>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
