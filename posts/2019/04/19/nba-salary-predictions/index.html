@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>How Much Should an NBA Player Make?</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+<body>
+
+    <div class="main-nav-container">
+
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-lg-2-3">
+                <div class="main-nav">
+                    <ul class="main-nav-list">
+                        <li class="main-nav-item"><a href="/" class="pure-menu-link">Data to Stories</a></li>
+
+                        <li class="main-nav-item"><a href="/pages/about-me/" class="pure-menu-link">About Me</a></li>
+                        <li class="main-nav-item active"><a href="/category/blog" class="pure-menu-link">Blog</a></li>
+                    </ul>
+                </div>
+             </div>
+
+             <div class="pure-u-1 pure-u-lg-1-3"></div>
+        </div>
+
+    </div>
+
+
+<div class="page-container">
+    <div class="entry-content">
+        <div class="post-meta pure-g">
+            <div class="pure-u">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA " class="post-avatar" alt="Blog">
+            </div>
+            <div class="pure-u-3-4 meta-data">
+                <a href="/category/blog" class="category">Blog</a><br />
+
+                <a class="author" href="/author/young-jeong.html">Young Jeong</a>
+                &mdash; <abbr title="2019-04-19T14:28:00-07:00">Fri 19 April 2019</abbr> &middot; 11 min read
+            </div>
+        </div>
+    </div>
+
+    <div class="article-header-container">
+        <div class="background-image-container">
+
+            <div class="background-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://s3-us-west-2.amazonaws.com/datatostories/nbamoney.png);">
+                <img src="https://s3-us-west-2.amazonaws.com/datatostories/nbamoney.png" alt="How Much Should an NBA Player Make?">
+                <div class="title">
+                <h1>
+                    How Much Should an NBA Player Make?
+                </h1>
+                <h2>
+                    They have families to take care of...
+                </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="entry-content">
+        <p>Managing expectations as an NBA owner, President or a general manager is not an easy task. There are so many moving parts to running one of the franchises of the best professional basketball league in the world. Most of the problem are over-emphasized and rather superficial (media-driven problems usually are), but a problem that cannot be neglected is literally the million dollar question: money management.</p>
+<p>It cannot be emphasized more on how important roster building is to becoming a winning franchise in the NBA. It also does not come easily, or cheap. Knowing when and how to spend money on a particular player can literally make or break a franchise for one or more decades. Setting themselves up nicely with manageable contracts for Steph Curry, Klay Thompson and Draymond Green, the Golden State Warriors were able to successfully target a marquee free agent named Kevin Durant in the summer of 2016; they have not lost a playoff series since. On the other hand, overpaying for bad free agents in the same year, Los Angeles Lakers have not reached a playoff since, even with arguably the Top 2 player of all time in LeBron James joining them last summer.</p>
+<p>What if there was a formula to predict what a player should be paid? Wouldn't that pique the interest of teams vying for free agents, and not overpay for a certain level of service (basketball skills)? </p>
+<h3><strong>The Project: NBA Player Salary Prediction</strong></h3>
+<p>InsightNOW, a fictional consultant for the NBA franchises run by yours truly, attempts to generate a model that will predict the salary for an upcoming free agent based on what we know: previous season's player statistics. </p>
+<p>I am focused on developing a product that can help teams make decision on how much a Free Agent should be; this is something they can use as either a baseline for making offers to a player or avoiding players who ask for unreasonable amount in their contract based on the statistics accumulated. This project was the first step in developing a prototype model for it.</p>
+<h3><strong>Collecting and Aggregating Data</strong></h3>
+<p>The data collection part of this project was heavily based on web scraping. After looking at various sports statistics websites, I decided to scrape different data from different sites. They are:</p>
+<ul>
+<li>Basketball-Reference.com: This is a well-known reference website for basketball that has extensive player statistics for every season. I scraped the basic and advanced statistics for all players in the seasons from 2007-08 to 2017-18.</li>
+<li>HoopsHype.com: A basketball section of the <em>USA Today Sports</em>, HoopsHype is a website with news and resources for the NBA, which include player salaries that I scraped (matching the seasons 2007-08 to 2017-18).</li>
+<li>Spotrac.com: Spotrac is a sports contract website that includes information about Free Agency classes. Although the NBA FA Class list information only goes back to 2011, I found it useful for identifying free agents.</li>
+</ul>
+<p>For Web Scraping I mostly used Selenium, a Python interactive web scraping library. Although I wanted to also use an HTML Parser with Selenium (BeautifulSoup4 was recommended), I ultimately used Python Pandas Library's read_html function to read in the tables. While parsing each line and extracting data would help me better learn the workings of BeautifulSoup, because the tables were nicely formulated in all of my sources, using the read_html function saved me a lot of time. <strong>I made a business decision to save time; often in the data science working environment, one must make decisions in the work process that prioritizes efficiency</strong>.</p>
+<p>I used all these scraped data to generate a single dataset of 2260 total observations that had these features:</p>
+<ul>
+<li>Name of the player</li>
+<li>Year he played in</li>
+<li>Position</li>
+<li>Team</li>
+<li>Regular and advanced statistics for the season (Explanation for all statistics are under the link "Glossary" <a href="https://www.basketball-reference.com/leagues/NBA_2019_per_game.html">here</a>)</li>
+<li>whether a player will be free agent or not following the season</li>
+<li>the player's next season salary (My Target Variable)</li>
+</ul>
+<p>Another design choice I made is that I accumulated the player's regular statistics into a 3-year accumulation; this was to take into account unforeseen events (i.e. injury, intentional non-playing due to conflict with management, etc.) that could skew certain player's data. Furthermore, most excruciating injuries in basketball often take a full year for recovery, so 3-year window could account for that. Because of this, I had to exclude many players whom had not played for more than 3 years up to the season in question.</p>
+<p>With the data set, I moved on to the next part: Data Analysis.</p>
+<h3><strong>What Features To Use?</strong></h3>
+<p>With 59 different initial features to use, I wanted to make sure I was using features that had a stronger impact to predicting the salary. In order to do so, I generated a linear regression model using all of my features versus the target variable (Salary) using Python's statsmodel library. I made sure to scale the features first. Here is the resulting table:</p>
+<div class="highlight"><pre><span></span>                                OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 SALARY   R-squared:                       0.603
+Model:                            OLS   Adj. R-squared:                  0.596
+Method:                 Least Squares   F-statistic:                     86.31
+Date:                Fri, 19 Apr 2019   Prob (F-statistic):               0.00
+Time:                        09:05:57   Log-Likelihood:                -37668.
+No. Observations:                2260   AIC:                         7.542e+04
+Df Residuals:                    2220   BIC:                         7.564e+04
+Df Model:                          39                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept   1.298e+06      2e+06      0.648      0.517   -2.63e+06    5.22e+06
+G          -1.621e+04   4718.694     -3.435      0.001   -2.55e+04   -6955.559
+GS          1.855e+04   2812.477      6.595      0.000     1.3e+04    2.41e+04
+MP          -882.8762    273.696     -3.226      0.001   -1419.603    -346.149
+OBPM        4.225e+04   1.81e+05      0.234      0.815   -3.12e+05    3.96e+05
+FTA          942.6823   2337.219      0.403      0.687   -3640.682    5526.047
+FT         -1.012e+04   8385.066     -1.207      0.228   -2.66e+04    6321.396
+FGA         2.579e+04   1.67e+04      1.541      0.123   -7018.337    5.86e+04
+_3P        -3.901e+04   2.43e+04     -1.607      0.108   -8.66e+04    8602.989
+_3PA       -2.412e+04   1.68e+04     -1.436      0.151   -5.71e+04    8827.264
+_2P        -7431.9636   1.62e+04     -0.458      0.647   -3.93e+04    2.44e+04
+_2PA       -3.686e+04   1.67e+04     -2.204      0.028   -6.96e+04   -4067.287
+ORB         6440.4127   1796.332      3.585      0.000    2917.746    9963.080
+AST         5763.0905    959.492      6.006      0.000    3881.495    7644.686
+TOV        -1.499e+04   2515.725     -5.960      0.000   -1.99e+04   -1.01e+04
+STL         4620.1075   3143.396      1.470      0.142   -1544.197    1.08e+04
+DRB         3750.4770    978.098      3.834      0.000    1832.395    5668.559
+PTS         1.712e+04   8046.265      2.127      0.034    1337.847    3.29e+04
+PER        -1.837e+05   1.24e+05     -1.486      0.137   -4.26e+05    5.87e+04
+OWS         -2.44e+04   1.53e+05     -0.160      0.873   -3.24e+05    2.75e+05
+DWS         3.912e+05   1.77e+05      2.209      0.027     4.4e+04    7.38e+05
+VORP        -6.45e+05   2.52e+05     -2.561      0.011   -1.14e+06   -1.51e+05
+USGPCT      1.593e+05    5.4e+04      2.949      0.003    5.33e+04    2.65e+05
+FGPCT      -2.722e+07    1.7e+07     -1.597      0.110   -6.06e+07    6.19e+06
+_3PPCT     -2.783e+05    8.6e+05     -0.323      0.746   -1.97e+06    1.41e+06
+_2PPCT      4.461e+06   3.58e+06      1.246      0.213   -2.56e+06    1.15e+07
+EFGPCT      1.257e+07   1.71e+07      0.736      0.462   -2.09e+07     4.6e+07
+FTPCT      -1.579e+06   1.08e+06     -1.458      0.145    -3.7e+06    5.45e+05
+BLK         4052.7786   2582.862      1.569      0.117   -1012.300    9117.857
+PF         -4271.9803   1504.290     -2.840      0.005   -7221.944   -1322.017
+TSPCT       1.722e+07   1.01e+07      1.707      0.088   -2.56e+06     3.7e+07
+_3PAR      -4.358e+06   2.76e+06     -1.582      0.114   -9.76e+06    1.04e+06
+FTR          -1.3e+06   1.16e+06     -1.118      0.264   -3.58e+06     9.8e+05
+ORBPCT      1.423e+04   6.12e+04      0.233      0.816   -1.06e+05    1.34e+05
+DRBPCT     -3.192e+04   4.18e+04     -0.764      0.445   -1.14e+05       5e+04
+ASTPCT      1.535e+04    2.9e+04      0.529      0.597   -4.15e+04    7.22e+04
+STLPCT     -6.465e+05   2.48e+05     -2.606      0.009   -1.13e+06    -1.6e+05
+BLKPCT     -1.248e+05   1.67e+05     -0.746      0.456   -4.53e+05    2.03e+05
+TOVPCT      2.604e+04   2.73e+04      0.955      0.340   -2.75e+04    7.95e+04
+DBPM        3.934e+05   1.55e+05      2.539      0.011    8.96e+04    6.97e+05
+==============================================================================
+Omnibus:                      261.992   Durbin-Watson:                   1.154
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              578.349
+Skew:                           0.695   Prob(JB):                    2.59e-126
+Kurtosis:                       5.052   Cond. No.                     1.57e+06
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.57e+06. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+
+
+<p>I wanted to look at the coefficients of each of the features (under column <em>coef</em>) to see which one has a higher weight than others (greater coefficient, whether positive or negative, should have a bigger impact on our target variable, salary), and also look at the P-value (P&gt;|t|) to see if the coefficient that is approximated for that feature has any statistical meaning. Small p-value, typically less than 0.05, shows me that the coefficient shown is statistically meaningful: in laymen's term, we can say that a particular feature is linearly correlated to the salary (with the weight of the coef. value) if the P-value is 0.05 or less. Based on those two factors, I decided to pick the following 18 features for my actual modeling:</p>
+<ul>
+<li>'G': Games Played</li>
+<li>'GS': Games Started</li>
+<li>'MP': Minutes Played</li>
+<li>'_3P': 3 Point Shots Made</li>
+<li>'_2PA': 2 Point Shot Attempts</li>
+<li>'FGA': Field Goal Attempts</li>
+<li>'FT': Free Throws Made</li>
+<li>'ORB','DRB': Offensive and Defensive Rebounds</li>
+<li>'BLK': Blocks</li>
+<li>'AST': Assists</li>
+<li>'TOV': Turnovers</li>
+<li>'PTS': Points</li>
+<li>'VORP': Value Over Replacement Player - measures how much more valuable a player is than an average one in his position</li>
+<li>'USGPCT': Usage Rate - measures how much a player possess the ball in his team's offense</li>
+<li>'STLPCT': A player's steal rate</li>
+<li>'DBPM': Defensive Box Plus/Minus - measures a player's impact on defense in terms of score difference when he's on the floor</li>
+<li>'DWS': Defensive Win Shares - measures a player's impact on defense in terms of how many wins he brings to his team</li>
+<li>'TOVPCT': A player's turnover rate</li>
+</ul>
+<h3><strong>Modeling: Linear Regression!</strong></h3>
+<p>For the actual modeling, I went through the following workflow:</p>
+<ol>
+<li>Split the data into Test/Train set, and put the Test set away</li>
+<li>Using the train set, fit a linear regression model and calculate a metric to measure its performance</li>
+<li>Predict the Test set salary using the model and calculate the metric; This model is the MVP - Minimum Viable Product</li>
+<li>Repeat Steps 1-3, but try different algorithms to find the best model (and use Cross-Validation with K-Fold for more robust training):<ul>
+<li>Linear Regression</li>
+<li>Linear Regression with feature engineering</li>
+<li>LR w/ Feature Engineering + Regularization (Ridge and Lasso)</li>
+</ul>
+</li>
+<li>After finding the best model, predict the salary with the Test set and calculate our final metric for the results.</li>
+</ol>
+<p>Using Python's sklearn library, I first split the test set from the train set. One thing to keep in mind is that for this dataset, the test set had to be split carefully; <strong>If the train and test set were split randomly, then some of the training data that happened later in time than some of the test data could cause what is known as a time series leakage.</strong> This is a concept of using future information to predict the data, which makes the model invalid. Therefore the test set contained all player observations from 2018. </p>
+<p>Before any modeling was done, it was important to look at the distribution of the target variable, the salary:</p>
+<p><img alt="image" src="https://s3-us-west-2.amazonaws.com/datatostories/salarydist.png"></p>
+<p>This does not help the case of trying to fit a linear regression, since the assumption is that the target variable is normally distributed. What I did to remedy the situation is transform the target variable using a cube root function. The resulting distribution plot shows much closer to a normal distribution:</p>
+<p><img alt="image" src="https://s3-us-west-2.amazonaws.com/datatostories/salarydistcbrt.png"></p>
+<p>I used the cube root transformed target variable and my 18 features to first run a linear regression model. The model had an initial RMSE (Root Mean Squared Error) score of 0.586961 and an Adjusted RMSE (which takes into account the number of features in the model) of 0.339731. I kept track of both RMSE and Adjusted RMSE to make sure that when I engineered additional features (the low scores indicated I was slightly under-fitting and had room for more) I didn't overfit. By adding polynomial features generated from existing ones, I was able to raise the RMSE and Adjusted RMSE scores to 0.674 and 0.388, respectively.</p>
+<p>At this point, I decided to run the model under cross-validation using K-Fold. Again, to avoid time series leakage, every validation set had to be from the same year (i.e. 2017), and the train set from the 3 previous years (i.e. 2016,2015,2014). This somewhat limited the randomness of Cross-validation split, but I did not want to risk the validity and integrity of my model. </p>
+<p>Using the cross-validation, I ran multiple models as listed above; I knew that the ridge regularization, which smooths out all the coefficients, instead of lasso regularization, which zeros out irrelevant coefficients, would work better for my modeling because I carefully chose my features and therefore didn't have any irrelevant features. </p>
+<p>The workflow confirmed this: the best model produced was a linear regression model with ridge regularization applied. The alpha value for the ridge regularization was 8.21, the mean absolute error on the training set was $3.04M, and the RMSE score of 0.5619. Which lead to...</p>
+<h3><strong>Predicting the 2018 NBA FA Salaries:</strong></h3>
+<p>The test set, as mentioned before, was the 2018 NBA Salaries (following the 2017-18 NBA season). Using the model produced I made predictions on the salary, and with the average of $11M, my prediction error using mean absolute error was about $4.4M.  </p>
+<h3><strong>What happened?</strong></h3>
+<p>Prediction error of $4.4M is not very promising for a product to be sold to NBA executives, even as a prototype. Looking for some ways to improve my model (and my chances of selling this to an NBA executive!), I explored some specific data points for insights. Below we see a residual plot (Prediction vs. Prediction Error):</p>
+<p><img alt="image" src="https://s3-us-west-2.amazonaws.com/datatostories/residual.png"></p>
+<p>The plot confirms the not-so-promising state of the model. Some reasoning might be possible through two players:</p>
+<ol>
+<li>DeMarcus Cousins (blue arrow): He was over-predicted by over 15 million dollars. What happened? Looking into his 3-year history, he was a phenomenal player and his stats proved that. He played at an all-star and perhaps an All-NBA (A Top 15 player, top 3 in his position) level until... he tore his achilles at the very end of the season. Achilles injuries are perhaps the hardest injury to recover from, and many never recovered to their previous level at all (examples include Wesley Matthews and Kobe Bryant). This reflected in the past off-season, when he took a $5M (considered below mid-level) pay to sign with the Golden State Warriors, a move many criticized as ring-chasing with the repeat champions.</li>
+<li>Mike Conley Jr (Red arrow): He was under-predicted by over 20 million dollars. His situation is a bit different from DeMarcus Cousins, and can even be seen as a reverse. Beloved by his team, the Memphis Grizzlies, Conley has been playing there since being drafted in 2007. While his 3-year history suggests he has been a mid-level player (with times missed for injury) in the NBA, due to his stature in the team, Memphis' inability to attract free agents and the team's lack of recent success essentially hamstrung the team into giving him a long time hero's contract.</li>
+</ol>
+<p>Many other cases can be examined just like these two, but regardless, there are many avenues to be explored in terms of improving the model. So what can be done?</p>
+<h3><strong>Future Implementations</strong></h3>
+<p>The insights from the prediction results showed there's clear room for improvements and some of the ways it can be done. </p>
+<ol>
+<li>Player/Team Information - It's clear that outside of normal stats, other things can drive a player's salary up or down. These include injuries, status of the team (its popularity, level of success, etc.), and relationship between a player and a particular team. I need to capture these and add them to the features.</li>
+<li>Player popularity - I would like to scrape information from twitter or instagram to determine a player's popularity amongst fans. I believe player popularity can be a great predictor of salary, as players are marketable product for teams and with increasing popularity, a player can be rewarded for bringing more merchandise income for teams. Also great players usually have higher exposure and therefore a higher following fanbase.</li>
+<li>Financial Structure of the NBA - Certain players are bound by what they can sign as part of the NBA Collective Bargaining Agreement. CBA has restrictions on salary terms on both the player and the team's sides. Therefore I want to capture that as well in the model.</li>
+</ol>
+<p>I will make these changes in the near future and improve the model as well. By then 2019 information will be available too (the free agency starts July 1) so I hope to test on the 2019 data. </p>
+<h3><strong>Conclusions</strong></h3>
+<p>My attempt at creating an NBA player salary predictor was not a great one; obviously there were unexplored areas in selecting data and especially features that need to be filled. However, I enjoyed the process of going through the data science work flow and learning a lot about making design choices and decisions based on subject matter expertise. Having enjoyed the NBA as a casual fan, I learned a lot about human effects to the contracts. After all, NBA players are just as human as I am and I hope to continue exploring the relationship between sports, statistics, and money through data.</p>
+    </div>
+
+    <footer>
+        <div class="tags">
+            <a href="/tag/linear-regression">Linear Regression</a>
+            <a href="/tag/nba">NBA</a>
+        </div>
+        <div class="pure-g post-footer">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="pure-g poster-info">
+                    <div class="pure-u">
+                        <img src="https://lh6.googleusercontent.com/-zEMaXmWAhdI/AAAAAAAAAAI/AAAAAAAAAAA/eVdgsm3TIDU/s128-c-k/photo.jpg" alt="">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="/author/young-jeong.html">Young Jeong</a></h3>
+                        <p class="author-description">
+                          
+            I am an aspiring Data Scientist, currently attending Metis.
+        
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="pure-u-1 pure-u-md-1-2">
+
+                <div class="pure-g post-category-info">
+                    <div class="pure-u">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA" alt="">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="/category/blog">Blog</a></h3>
+                        <p class="author-description">
+                          
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </footer>
+
+    <div class="entry-content">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'data-to-stories';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+</div>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-137795201-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</body>
+</html>
