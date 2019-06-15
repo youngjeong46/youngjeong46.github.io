@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Travel Recommender Flask App</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+<body>
+
+    <div class="main-nav-container">
+
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-lg-2-3">
+                <div class="main-nav">
+                    <ul class="main-nav-list">
+                        <li class="main-nav-item"><a href="/" class="pure-menu-link">Data to Stories</a></li>
+
+                        <li class="main-nav-item"><a href="/pages/about-me/" class="pure-menu-link">About Me</a></li>
+                        <li class="main-nav-item active"><a href="/category/blog" class="pure-menu-link">Blog</a></li>
+                    </ul>
+                </div>
+             </div>
+
+             <div class="pure-u-1 pure-u-lg-1-3"></div>
+        </div>
+
+    </div>
+
+
+<div class="page-container">
+    <div class="entry-content">
+        <div class="post-meta pure-g">
+            <div class="pure-u">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA " class="post-avatar" alt="Blog">
+            </div>
+            <div class="pure-u-3-4 meta-data">
+                <a href="/category/blog" class="category">Blog</a><br />
+
+                <a class="author" href="/author/young-jeong.html">Young Jeong</a>
+                &mdash; <abbr title="2019-06-09T12:00:00-07:00">Sun 09 June 2019</abbr> &middot; 8 min read
+            </div>
+        </div>
+    </div>
+
+    <div class="article-header-container">
+        <div class="background-image-container">
+
+            <div class="background-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://datatostories.s3-us-west-2.amazonaws.com/travel.jpg);">
+                <img src="https://datatostories.s3-us-west-2.amazonaws.com/travel.jpg" alt="Travel Recommender Flask App">
+                <div class="title">
+                <h1>
+                    Travel Recommender Flask App
+                </h1>
+                <h2>
+                    Where do you want to go?
+                </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="entry-content">
+        <p><em>Here are some links for access: <a href="https://github.com/youngjeong46/travel-recommender">Github Repo</a>, <a href="http://travel-recommender-app.herokuapp.com/">Web App</a></em></p>
+<p>Everyone wants to go on vacations: it is the one opportunity for you (+ your loved ones) to get away from the busy life that wears you down. </p>
+<p>So you decide to block out some time for vacation, report your intentions to your boss, and then gets it approved. Now what? Where do you go? How do you decide?</p>
+<p>Of about 41 million people who went abroad from the United States in 2018, more than 60% of them booked destination trip last minute. Furthermore, according to Google's Travel Research team, about 57% of the travelers want a service to help them personalize their trip. It's obvious people need help in deciding where to go on vacation.</p>
+<h3><strong>The Project: A Product that can help you decide your next destination</strong></h3>
+<p>This project attempts to help travelers choose their destination by looking at what they want out of their ideal vacation, and the output is the app that looks something like this:</p>
+<p><img alt="travel-app-screenshot" src="https://datatostories.s3-us-west-2.amazonaws.com/travel-app-screenshot.png">
+<sub><sup>The app showing suggestions and a guest review of the hotel</sup></sub></p>
+<p>The design of the app is simple; the user will need to type his or her ideal vacation destination. Whatever they are looking for, they can type in sentences.</p>
+<p>Based on the information provided, the app uses Natural Language Processing (NLP) model to pick a destination based on a review that mostly matches what the user is looking for. </p>
+<p>NLP is a field in AI and Machine Learning that is concerned with programming computers to process and analyze large amounts of natural language (i.e. English) data. Some of the challenging topics involve speech recognition, machine translations, and question answering.</p>
+<p>So how is the NLP model built for this recommendation system?</p>
+<h3><strong>Data: TripAdvisor Reviews!</strong></h3>
+<p>In order to generate the model, I decided to look at reviews of hotels from one of the most popular travel review website: tripadvisor.com</p>
+<p><img alt="tripadvisor-review" src="http://static.tacdn.com/img2/email/reviewguide/desktopreview1.jpg"><sup><sub>Example of a TripAdvisor hotel review</sub></sup></p>
+<p>Instead of using BeautifulSoup and Selenium, I decided to write my own Scrapy code. Scrapy is a web crawling Framework widely used in the industry. Scrapy architecture is built around "Spiders", self-contained crawlers that follow certain instructions. Scrapy is powerful in that it employs DRY (Don't Repeat Yourself) principle. Codes can be reused to achieve same set of instructions for different websites.</p>
+<p>Using Scrapy, I was able to generate a Spider that scraped all the hotel reviews from the following destinations and import them into a MongoDB database: Boracay, Playa Del Carmen, Punta Cana, Gran Canaria, Vienna, Budapest, Whistler, and Aspen. Other than those locations being some of the world's most popular destinations, it is also a good mixture of different types of destinations (beach, ski resorts, cold towns, and covering most of the globe)</p>
+<p>From those destinations, I was able to generate close to 130000 hotel reviews. However, I did not want to recommend based on a bad review, so I filtered for only positive reviews (4+). Therefore, the model was created based on ~86000 positive reviews.  </p>
+<h3><strong>Modeling: NLP Models!</strong></h3>
+<p>I took the iterative design method based on the following NLP workflow:</p>
+<h4>1. Preprocessing the documents:</h4>
+<ul>
+<li>Clean the documents: Remove punctuations, special characters, and either stem or lemmatize certain words (I chose to lemmatize).</li>
+<li>Tokenize the documents: Using NLTK's tokenizer, I tokenized the documents, removing stop-words.</li>
+</ul>
+<p>The most difficult part of pre-processing was having a robust stop words. Stop-words are common words that are filtered out during preprocessing because they don't contribute to the context or meaning of the sentence or document (i.e. this, that, a, such, and, etc.). I used NLTK's pre-built English stop-words, but after running the model over and over again, realized that it is not complete. One of the biggest lessons here: <strong>Don't always rely on another's work; use it as a starting point, and add onto it to create something that suits your need.</strong> </p>
+<h4>2. Vectorizing the tokens:</h4>
+<p>Once the documents are tokenized (A string of document --&gt; a list of individual, preprocessed words), it needs to be vectorized. Two of the popular vectorizers are CountVectorizer - count of each words and TF-IDF (Term Frequency-Inverse document frequency) - a lot like CountVectorizer, but accounting for a word's frequency in the corpus (in this case, collection of all the reviews).</p>
+<p>I decided to use TF-IDF since it better reflects the effect of words that may appear a lot in the overall corpus and weigh it differently. </p>
+<h4>3. Topic Modeling:</h4>
+<p>There are many ways to go for an NLP modeling at this point, and that's the beauty of Unsupervised learning: Since there is no labels to categorize the inputs into, it is up to me to either put certain documents into its own category or bin based on similarity (a technique called clustering) or create several subject topics based on occurrences of the words in the collection and generate a vector for each document's probability distribution of belonging in each of the subject topic (a technique called topic modeling).</p>
+<p>I chose to use topic modeling because I didn't like the possibility of clustering different reviews of the same hotels into different clusters! </p>
+<p>Using the TF-IDF matrix, I applied some of the topic modeling algorithms I am familiar with (NMF and LSA). NMF, or Non-negative Matrix Factorization, and LSA, Latent Semantic Analysis, are techniques based on decomposing a huge, sparse matrix (i.e. the TF-IDF matrix) into a product of smaller matrices (or so called Singular Value Decomposition). </p>
+<p>Sparing a Linear Algebra lecture, basically we extract a smaller matrix that represent our subject topics, and each document's probability of belonging in that subject topic. The number of topics is a hyper-parameter that required tuning as I ran the model iteratively. </p>
+<h4>4. Create a recommender system:</h4>
+<p>The recommender system, based on the model that I created, would be built using this pipeline:</p>
+<ol>
+<li>User input text is stored as a single document (python string)</li>
+<li>It goes through the same process as the dataset documents: preprocessing, tokenization, TF-IDF (this will be a vector, not a matrix as there is one document)</li>
+<li>After the TF-IDF vector is run through the model, it will generate a probability distribution of the document in the topic space.</li>
+<li>
+<p>The system finds documents that are most similar to the user input document using a metric. The metric most commonly used and associated with text data is called a cosine similarity, given by the following equation:</p>
+<p>$\cos\left(\theta\right) = \frac{A \cdot B}{||A||||B||} $</p>
+<p>Higher the cosine value, more the documents A and B are similar.</p>
+</li>
+</ol>
+<h3><strong>Model Selection</strong></h3>
+<p>Of the two topic modeling algorithms, I chose to go with LSA over NMF because of its higher training time. Albeit, the two models had similar results in terms of performance.</p>
+<h3><strong>Evaluating Model Performance</strong></h3>
+<p>NLP, or any other unsupervised learning models are notorious for the difficulty in evaluating its performance. Since there is no labels, it is hard to know if the subject topics are correct, or even make sense based on the words associated with them.</p>
+<p>Specifically for this project, here were the top 10 word associated with some of the topics:</p>
+<div class="highlight"><pre><span></span>Topic  10
+service, excellent, would, recommend, stay, really, nice, highly, walk, definitely
+
+Topic  11
+really, walking, distance, place, well, enjoyed, excellent, within, restaurants, beach
+
+Topic  12
+location, really, perfect, excellent, everything, walk, service, best, apartments, amazing
+
+Topic  13
+would, recommend, location, price, close, rooms, walking, value, distance, clean
+
+Topic  14
+excellent, location, stay, walking, distance, perfect, staff, place, lovely, breakfast
+
+Topic  15
+well, excellent, close, stay, time, apartments, always, clean, family, equipped
+</pre></div>
+
+
+<p>Here were some of the observations I had:</p>
+<ol>
+<li>
+<p>As I previously mentioned, stop-words that I kept adding were not doing a very good job. We see words like "really" still pop up.</p>
+</li>
+<li>
+<p>A lot of words are being repeated in the same group.</p>
+</li>
+</ol>
+<p>Having iterated through and testing some custom inputs, I came up with the number of topics = 47 as having the most sufficient results. It's still unclear as to how to measure the effectiveness of the model in an NLP study, but I did come across an interesting case study:</p>
+<h3><strong>Case Study: Ski vs Jet Ski</strong>:</h3>
+<p>Typing the phrase "I want to go to a beach" returned a hotel in Boracay as the recommendation: this makes sense, since Boracay is a beach destination in the Philippines.</p>
+<p>However, typing the phrase "I want to go ski" also returned a hotel in Boracay as the highest recommendation: Boracay has mountains, but is NOT known to be a ski resort town. What happened?</p>
+<p>There are two things that's happening here: </p>
+<ol>
+<li>
+<p>Running a word frequency on all of the documents from Whistler or Aspen (Two ski resort places), I don't see the word ski within the Top 10. Mountain appears as the 6th most frequent words. I realized one thing - hotel reviews often only talk about status of the hotel or the service, not of activities around it. Here is where I realized that hotel reviews were not sufficient enough to accommodate user requests that talk about activities or landmarks.</p>
+</li>
+<li>
+<p>This is something I didn't realize (since I have only done this once), but Boracay (or any other summer destinations) accommodate <strong>Jet</strong> Ski. It was only brought up to me after the completion of the project! </p>
+</li>
+</ol>
+<p>There are many instances of interesting cases like this, and this certainly makes NLP process much harder to grasp or execute.</p>
+<h3><strong>Conclusions &amp; Future Implementations</strong></h3>
+<p>With many examples of interesting results when applying custom inputs, I realize with some tweaks to the model, it can prove to be a great source of traveling needs. Here are some changes that need to be made in order to do so:</p>
+<ol>
+<li>Adding Activities &amp; Landmarks reviews: as discussed in the overview, a lot of the hotel reviews were what it sounds like - reviews of the hotel and hotel only. Since it's hard to make topic separations when all reviews talk about hotel most of the time, it would be great to include Activities and Landmarks of these locations as part of the document collection. This will make the model recommend more based on what a location is like rather than what their hotels provide or not.</li>
+<li>More destinations: Including more destinations will provide better and more robust recommendations to the users.</li>
+<li>Multi-Language support: Some of the reviews were in foreign languages; making preprocessing and NLP application multi-language can mean I can include more foreign reviews. </li>
+</ol>
+<p>I learned a great deal of document processing through this project. I am glad to again develop an app; however, it is rather a poorly designed model based on how some of the custom input results turned out. NLP is one of the hardest researched topic in Data Science and Machine Learning, and it's because of the high complexity of the human language and grammar. This is a project that I will definitely be coming back in order to make it better; I feel it's more incomplete than my other projects because of so many holes I saw as I completed the app.</p>
+    </div>
+
+    <footer>
+        <div class="tags">
+            <a href="/tag/unsupervised-learning">Unsupervised Learning</a>
+            <a href="/tag/nlp">NLP</a>
+            <a href="/tag/lsa">LSA</a>
+            <a href="/tag/gensim">Gensim</a>
+        </div>
+        <div class="pure-g post-footer">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="pure-g poster-info">
+                    <div class="pure-u">
+                        <img src="https://lh6.googleusercontent.com/-zEMaXmWAhdI/AAAAAAAAAAI/AAAAAAAAAAA/eVdgsm3TIDU/s128-c-k/photo.jpg" alt="">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="/author/young-jeong.html">Young Jeong</a></h3>
+                        <p class="author-description">
+                          
+            I am a Data Scientist, currently working on interesting projects.
+        
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="pure-u-1 pure-u-md-1-2">
+
+                <div class="pure-g post-category-info">
+                    <div class="pure-u">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA" alt="">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="/category/blog">Blog</a></h3>
+                        <p class="author-description">
+                          
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </footer>
+
+    <div class="entry-content">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'data-to-stories';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+</div>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-137795201-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</body>
+</html>
