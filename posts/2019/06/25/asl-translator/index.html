@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>American Sign Language Chat App</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+<body>
+
+    <div class="main-nav-container">
+
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-lg-2-3">
+                <div class="main-nav">
+                    <ul class="main-nav-list">
+                        <li class="main-nav-item"><a href="/" class="pure-menu-link">Data to Stories</a></li>
+
+                        <li class="main-nav-item"><a href="/pages/about-me/" class="pure-menu-link">About Me</a></li>
+                        <li class="main-nav-item active"><a href="/category/blog" class="pure-menu-link">Blog</a></li>
+                    </ul>
+                </div>
+             </div>
+
+             <div class="pure-u-1 pure-u-lg-1-3"></div>
+        </div>
+
+    </div>
+
+
+<div class="page-container">
+    <div class="entry-content">
+        <div class="post-meta pure-g">
+            <div class="pure-u">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA " class="post-avatar" alt="Blog">
+            </div>
+            <div class="pure-u-3-4 meta-data">
+                <a href="/category/blog" class="category">Blog</a><br />
+
+                <a class="author" href="/author/young-jeong.html">Young Jeong</a>
+                &mdash; <abbr title="2019-06-25T14:30:00-07:00">Tue 25 June 2019</abbr> &middot; 7 min read
+            </div>
+        </div>
+    </div>
+
+    <div class="article-header-container">
+        <div class="background-image-container">
+
+            <div class="background-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://www.learnlanguageshere.com/wp-content/uploads/alphabet-2023292_1280.png);">
+                <img src="https://www.learnlanguageshere.com/wp-content/uploads/alphabet-2023292_1280.png" alt="American Sign Language Chat App">
+                <div class="title">
+                <h1>
+                    American Sign Language Chat App
+                </h1>
+                <h2>
+                    How I built an ASL-to-English translator with just a webcam and an inspiration
+                </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="entry-content">
+        <p><img alt="action" src="https://datatostories.s3-us-west-2.amazonaws.com/asl-app-screenshot.png">
+<center><sub><sup>ASL --&gt; English</sup></sub></center></p>
+<p>This project was presented at the Metis Career Day on June 20th, 2019. You can watch a recorded livestream of this on <a href="https://livestream.com/accounts/23925505/events/8705967">here</a>. (You may be required to sign up to watch, but I highly suggest it as there were many great presentations on various data science projects.) </p>
+<p><em>Click <a href="https://github.com/youngjeong46/asl-translator.git">here</a> for the Github Repo; click <a href="https://docs.google.com/presentation/d/1Qxgr8uwr1CdP6KkYdxH7DkK4EWLnJiqqkmAnD_Puwec/edit?usp=sharing">here</a> for the presentation slide deck.</em></p>
+<h3><strong>Inspiration</strong></h3>
+<p>For my final project at Metis, I wanted to create something that I both loved (this one is called the Passion project, to explore something I'm passionate about) and that could be impactful to the rest of the world. I've always been interested in Computer Vision so I wanted to apply my skills to solve problems in Object detection, image classification, motion detection or other problems in the CV space.</p>
+<p>Then one day I ran into a deaf friend from long ago and suddenly everything became clearer. </p>
+<p>It was harder for us communicate as always, and it didn't help that I had just caught a nasty cold which took away my voice. I've never had to learn sign language since she mouthed words, typed them on her phone to see or simply got by with body language. </p>
+<p>Among the conversation we had, a topic arose regarding the deaf community. Of all the statistics I found hard to believe, two in particular were shocking:</p>
+<ol>
+<li>3 out of every 4 deaf children can't sign with their family because the family didn't learn it.</li>
+<li>Only about 2% of the non-deaf population in the United States know how to sign.</li>
+</ol>
+<p>These facts and the deaf community's rising unemployment rate (something around 80%) showed that a gap in communication the deaf and the not-deaf presented a significant disadvantage to the deaf in receiving a satisfactory quality of life. I suddenly had an idea: What if I could make communicating easier between the deaf and the rest of us?</p>
+<p>Enter the project: ASL Video Chat App!</p>
+<h3><strong>Basis of the Project</strong></h3>
+<p>On Apple Store, there's only one video chat app for an iPhone. This one requires a paid human interpreter, making it both expensive and intrusive. Combining Deep Learning, Image Classification, and a little bit of magic, an idea to create a video chat app that translates ASL to English was born.</p>
+<p>The basic premise of the product: A deaf user gestures in sign language into a camera, which then images it. The image is ran through a deep learning model, which interprets the image, assigns to a letter, then prints it out on screen for the other party to see. It is a machine translation that takes out any intrusive, human element, other than the chat participants.</p>
+<h3><strong>Initial Dataset: Kaggle</strong></h3>
+<p>To create the deep learning model, I needed an image dataset of the American Sign Language. With a limited time (~3 weeks), it was going to be harder to implement actual ASL grammar and words into the system. However, letter translation was more than doable.</p>
+<p>I began modeling with a Kaggle dataset, which contained 3000 ASL gesture images per 29 different gestures: A-Z, and three gestures indicating "Space", "Backspace" and the background ("Nothing"). You can see the image dataset <a href="https://www.kaggle.com/grassknoted/asl-alphabet">here</a>.</p>
+<p><center><img alt="a" src="https://storage.googleapis.com/kagglesdsdata/datasets%2F23079%2F29550%2Fasl_alphabet_test%2Fasl_alphabet_test%2FA_test.jpg?GoogleAccessId=datasets-dataviewer@kaggle-161607.iam.gserviceaccount.com&amp;Expires=1561588344&amp;Signature=TKAhVHdujbb9J%2FW431rNg0fEDrW2zKrVd60jxuvYkvtiZ6ps%2F3AYoC%2FW705Wc%2BSvwFUIvge6C4w%2FUvKhdXySBWpOOjXDRKDBWoHj334nuzHt5TnCBN%2Bzjg9vcvNxaYOfCXpWzSqh9VRFIFGXLWWelO8GVU6hglf3ZCfR0LHs6WQF4d4sl6oNZNIYCzc8G2XqNIs5t7HLesmUElLKNEh7kH88oTH5vm89KtAXw1TzGsCmXRwwFt%2F3RD%2F858sTmnLo%2FAcMSd074wxDb4Q6nwNSDEb0ClBMMOG3e%2B3XW9DNoLj4TpUOX3VxDjNFSV8cDyV2m0tDUO2zkE4f65Anr6Osjg%3D%3D"> <img alt="f" src="https://storage.googleapis.com/kagglesdsdata/datasets%2F23079%2F29550%2Fasl_alphabet_test%2Fasl_alphabet_test%2FF_test.jpg?GoogleAccessId=datasets-dataviewer@kaggle-161607.iam.gserviceaccount.com&amp;Expires=1561592779&amp;Signature=F3LOUHzfziokj8eGCfBPKTk%2FtEM3m7ow8nIslmJYoHfWzC2Uqv1lfF9TE3PG8X%2BBL6QlUXfW4jvF9tHMcHLBfbf9VUZ3Gw3ADLAppjSCskqIUVUSDPM353j8U%2BunqQcgX2odn1sTDPXlWd9JlNr4CGQJxLFbiI7oS4H00uJrTSeJ3Rodf3D31G5UBmPjxha0Uv84WBbeoEUHfUsYct27i%2Fs2nGryr0WnXF26WUL0Regr8avQ7LhJidnlaHYyyk%2B4LdqKZAWJpozyNMa%2FyDnoF7Iv0Xnte7DoNDMQKZZVx2pmKG4kEadYXdghQ1%2FEF5Dt3GxHVMSucRnYILrCCGQcGA%3D%3D"></center>
+<center><sup><sub>Example images from the Kaggle Dataset</sub></sup></center></p>
+<p>Preprocessing the images required conversion from Pillow format to NumPy 4-D tensors as Keras neural net instances required so. Since the images were color, it was already into a required 224x224x3 (with 3 representing the RGB channel).</p>
+<h3><strong>Initial Modeling</strong></h3>
+<p>With the dataset, I decided to look at two different Convolutional Neural Net (CNN) architectures: VGG16 and MobileNet V1. VGG16, which came out in 2015, was one of the earliest break-through in large-set image classification. It had published 74% top-1 accuracy on a 1000-class ImageNet dataset. </p>
+<p>On the other hand, since the project had an end-goal of a mobile application, I wanted to compare that with an architecture best suited for mobile app. MobileNet V1 was published in 2018 and while it had ~71% accuracy, also required much less memory due to its depth-wise separable convolution that required less operations. </p>
+<p>Using Keras with Tensorflow backend, I began training the Kaggle dataset with Cross-validation and tracked it using TensorBoard. Training from scratch would take weeks; with limitation on time, Keras did provide with pre-trained weights based on the <a href="http://www.image-net.org/">ImageNet Dataset</a>. ImageNet Challenge was a Kaggle challenge to create a model to classify ~150,000 images into 1000 classes. </p>
+<p>Initializing using the pre-trained weights from Imagenet, and training with my own dataset with different classifier at the end, along with two additional dense layers, I essentially created my model and trained it based on the knowledge from a similar training. This technique, called Transfer Learning, is a machine learning technique famous for performing similar task (Image Classification) to reduce time.</p>
+<p>With transfer learning, VGG16 cross-validation accuracy was 96% and MobileNet at 92%. The test set (which was from the same dataset, but held out of training) performed at 85% accuracy for VGG16 and 83% for MobileNet. The result seemed satisfactory... until I decided to feed images of my own hands and test a bunch. Using my cell phone camera, I took 4 images of each gesture, with different background each time (total of 76 images). </p>
+<p><img alt="my-hand1" src="https://datatostories.s3-us-west-2.amazonaws.com/asl-e2.jpg">
+<center><sup><sub>Example of letter "E" using my own hand</sub></sup></center></p>
+<p>Running a prediction model using VGG16, I achieved a prediction accuracy of... 37%. With MobileNet, the accuracy tanks to even lower 31%. What happened? The biggest lesson here is that <strong>the model does not behave well with images seen in the real world if it's NOT trained with images seen in the real world.</strong></p>
+<h3><strong>Creating my own Data</strong></h3>
+<p>There's a clear disconnect between the hands seen in the image set, which was really one set of hands in the same background, and what was likely to be seen in real life (different background, different shades, sizes, and angles of the hand). At this point, instead of relying on a dataset, I decided to create my own.</p>
+<p>I already knew that in order to create the Chat App, I would have to get familiar with the OpenCV library, a famous Computer Vision library (built in C++). Using the Python wrapper for OpenCV, I was able to create an image set based on frame assignment from a rectangular border. </p>
+<p><img alt="hand-captures" src="https://datatostories.s3-us-west-2.amazonaws.com/hand-captures.png">
+<center><sup><sub>Regular capture (left) and capture with background subtraction (right) of my hand</sub></sup></center></p>
+<p>I had originally saved two sets: one regular and one with background subtraction applied (to remove backgrounds). The background subtraction function built-in on OpenCV creates a mask to the image and turns the hand white, and the background black. While in theory using this data will make the model predict better on different hands, it will also take the model longer to pre-process the images. During the model testing, the tradeoff in accuracy was not enough to justify masking with background subtraction.</p>
+<h3><strong>Modeling Part 2</strong></h3>
+<p>Building the two different architectures as the basis of my modeling again, the cross-validation accuracy for VGG16 was 98%, and MobileNet at 96%. Test set prediction from the dataset I used during the first modeling recorded at 94% for VGG16 and 92% for MobileNet, proving that this time the model behaved well to out-of-sample dataset. </p>
+<p>Now I was a little more optimistic about the performance of the model using real-time gestures. It was also important to see how the difference in architecture would fare in metrics that were important for mobile applications: Latency and Size.</p>
+<h3><strong>Building an Application</strong></h3>
+<p>To build an actual application, I used OpenCV to capture a rectangular image of where the hand would be, and then saved a frame for a single-image prediction using the model. The prediction is made every frame, and the prediction (which is given in a probability distribution over all gestures) is given as a letter with the highest probability. The screen then prints the current letter prediction for the frame. Once a button is clicked, the letter is saved and the next prediction is made and then printed next to the saved "word" so far.</p>
+<p>Finally testing the gestures in real-time, I was pleased with how the model performed. The model was accurately predicting my gestures most of the time, and I was able to spell out the word I wanted based on the predictions being made. Of the two architectures that I built the model based off of, I decided to go with MobileNet V1. While accuracy was slightly higher in VGG16 (94% vs 92%), with model prediction being made for each frame, the application started having delay issues. In fact, per frame latency for VGG16 was 4-5 times higher than MobileNet V1. Furthermore, MobileNet model checked in at 32MB, less than 10% of VGG16 (454MB). <strong>A little reduction in accuracy is worth the huge tradeoff in size and latency reductions, especially in a mobile setting, and for that MobileNet V1 is the more appropriate choice here.</strong></p>
+<p>Demo is seen here:</p>
+<p><span class="videobox">
+                <iframe width="640" height="390"
+                    src='https://www.youtube.com/embed/OvneXS9cMYo'
+                    frameborder='0' webkitAllowFullScreen mozallowfullscreen
+                    allowFullScreen>
+                </iframe>
+            </span></p>
+<h3><strong>Conclusions</strong></h3>
+<p>While I had a wild success in machine translation of sign language, the next step is the real step to creating something meaningful: an actual iPhone app. Apple provides with <a href="https://developer.apple.com/documentation/coreml">CoreML Framework</a> that users can easily convert Keras models to mobile integration. The first step of generating the iPhone App is then to write a simple app similar to the Python app I created above. I plan to create additional features such as collecting different user's correctly predicted gestures, to add to the dataset (with consent). The model is still dealing with some inconsistencies in predicting gestures of similar shapes, and data collection of different hands will aid in making the model more robust. </p>
+<p>Eventually, with further development in motion detection, one day I can create an actual chat app that my deaf friend can use to talk to me from somewhere remote, with full on grammar and word translations. For now, I sign off with this result.</p>
+    </div>
+
+    <footer>
+        <div class="tags">
+            <a href="/tag/deep-learning">Deep Learning</a>
+            <a href="/tag/keras">Keras</a>
+            <a href="/tag/tensorflow">Tensorflow</a>
+            <a href="/tag/opencv">OpenCV</a>
+            <a href="/tag/image-classification">Image Classification</a>
+            <a href="/tag/mobilenet">MobileNet</a>
+            <a href="/tag/vgg16">VGG16</a>
+            <a href="/tag/imagenet">ImageNet</a>
+            <a href="/tag/sign-language">Sign Language</a>
+        </div>
+        <div class="pure-g post-footer">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="pure-g poster-info">
+                    <div class="pure-u">
+                        <img src="https://lh6.googleusercontent.com/-zEMaXmWAhdI/AAAAAAAAAAI/AAAAAAAAAAA/eVdgsm3TIDU/s128-c-k/photo.jpg" alt="">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="/author/young-jeong.html">Young Jeong</a></h3>
+                        <p class="author-description">
+                          
+            I am a Data Scientist, currently working on interesting projects.
+        
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="pure-u-1 pure-u-md-1-2">
+
+                <div class="pure-g post-category-info">
+                    <div class="pure-u">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVNxE1akPh1Fa_0D1wufyK3tMiF82JFlPJtIR-DEdMM2jl3ZGXA" alt="">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="/category/blog">Blog</a></h3>
+                        <p class="author-description">
+                          
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </footer>
+
+    <div class="entry-content">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'data-to-stories';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+</div>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-137795201-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</body>
+</html>
